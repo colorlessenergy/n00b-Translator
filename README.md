@@ -1,4 +1,4 @@
-# _mini-string-esolang_
+# _english to noob_
 
 #### _a website solving an algorithm problem, 05.15.2018_
 
