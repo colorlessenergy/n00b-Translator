@@ -43,14 +43,16 @@ that are given.
 */
 
 function n00bify(text) {
-	var textLength = text.length;
-	text = text.split(" ");
+  console.log(text);
+  text = text.split(" ");
 
-	text.forEach(function (current, index) {
-		// replace to or too with a number 2
-		if (current.toLowerCase().indexOf("to") > -1) {
-			if (current.toLowerCase().indexOf("too") > -1) {
-				text[index] = text[index].replace("too", "2");
+  for (var index = text.length-1; index >= 0; index--) {
+    var current = text[index]
+
+    // replace to or too with a number 2
+    if (current.match(/to/i)) {
+      if (current.match(/too/i)) {
+        text[index] = text[index].replace((/too/i), "2");
 			} else {
 				text[index] = text[index].replace("to", "2");
 			}
@@ -67,8 +69,8 @@ function n00bify(text) {
 
 		// replace double o with double 0
 
-		if (current.indexOf("oo") > -1 && current.toLowerCase() !== "too" || current.toLowerCase() !== "to") {
-			text[index] = text[index].replace("oo", "00");
+    if (current.match(/oo/i)) {
+      text[index] = text[index].replace(/oo/i, "00");
 		}
 
 		/*
@@ -77,8 +79,8 @@ function n00bify(text) {
 		and "no"
 		*/
 
-		if (current.indexOf("be") > -1) {
-			text[index] = text[index].replace("be", "b");
+		if (current.toLowerCase().indexOf("be") > -1) {
+			text[index] = text[index].toLowerCase().replace("be", "b");
 		}
 		if (current.indexOf("are") > -1) {
 			text[index] = text[index].replace("are", "r");
@@ -90,7 +92,7 @@ function n00bify(text) {
 			text[index] = text[index].replace("please", "plz");
 		}
 		if (current.indexOf("people") > -1) {
-			text[index] = text[index].replace("people", "pbl");
+			text[index] = text[index].replace("people", "ppl");
 		}
 		if (current.indexOf("really") > -1) {
 			text[index] = text[index].replace("really", "rly");
@@ -103,66 +105,88 @@ function n00bify(text) {
 			text[index] = text[index].replace("know", "no");
 		}
 
-		if (current.indexOf("s") > -1) {
-			text[index] = text[index].replace("s", "z");
-		}
+    if (current.match(/s/g)) {
+      text[index] = text[index].replace(/s/g, "z");
+    }
+    
+    if (current.match(/S/g)) {
+      text[index] = text[index].replace(/S/g, "Z");
+    }
 
-		if (current.toLowerCase().indexOf("w") > -1 && index == 0) {
+		if (current.toLowerCase().startsWith("w") && index == 0) {
+      index = text.length - 1;
 			text.unshift("LOL");
+    }
+    
+    if (current.match(/\./ig)) {
+      text[index] = text[index].replace(/\./ig, "")
 		}
-
-		if (index % 2 === 0) {
-			text[index] = text[index].toUpperCase();
+    if (current.match(/\,/ig)) {
+      text[index] = text[index].replace(/\,/ig, "");
 		}
-
-		if (current.indexOf(".") > -1) {
-			text[index] = text[index].replace(".", "")
-		}
-		if (current.indexOf(",") > -1) {
-			text[index] = text[index].replace(",", "");
-		}
-		if (current.indexOf("\'") > -1) {
-			text[index] = text[index].replace("\'", "");
+    if (current.match(/\'/ig)) {
+      text[index] = text[index].replace(/\'/ig, "");
 		}
 		
-		if (current.indexOf("?") > -1) {
-			var storeQuestionMarks = "";
-			for (let i = 0; i < text.length-1; i++) {
-				storeQuestionMarks += "?"
-			}
-			text[index] = text[index] + storeQuestionMarks;
-		}
 
-		if (current.indexOf("!") > -1) {
-			var storeExclamationPoints = "";
-			for (let i = 0; i < text.length - 1; i++) {
-				if (i % 2 === 0) {
-					storeExclamationPoints += "1"
-				} else {
-					storeExclamationPoints += "!"
-				}
-			}
-			text[index] = text[index] + storeExclamationPoints;
-		}
-	});
+  };
 
+
+  var textLength = (text.length - 1) + text.join("").length;
+  console.log(textLength, text);
 	if (textLength > 32 && text[0] !== "LOL") {
-		text.unshift("OMG")
+    text.unshift("OMG")
 	} else if (text[0] === "LOL" && textLength > 32) {
-		text.splice(1, 0, "OMG");
+    text.splice(1, 0, "OMG");
+  }
+  
+	if (text[0].toLowerCase().startsWith("h")) {
+    text.forEach(function (char, subIndex) {
+      text[subIndex] = text[subIndex].toUpperCase();
+		});
 	}
-	if (text[0].toLowerCase().indexOf("h") > -1) {
-		text.forEach(function (char, subIndex) {
-			text[subIndex] = text[subIndex].toUpperCase();
-		})
-	}
+  
+  text.forEach(function (currentWord, currentIndex) {
+    if ((currentIndex + 1) % 2 === 0) {
+      // console.log(text);
+      text[currentIndex] = text[currentIndex].toUpperCase();
+    };
+
+    if (currentWord.indexOf("!") > -1) {
+      // console.log("called ", text.length, text, currentWord);
+      var currentIndexExclamation = text[currentIndex].indexOf("!");
+      text[currentIndex] = text[currentIndex].replace("!", "");
+      
+      
+      var storeExclamationPoints = "!";
+      for (let i = 0; i < text.length - 1; i++) {
+        if (i % 2 === 0) {
+          storeExclamationPoints += "1"
+        } else {
+          storeExclamationPoints += "!"
+        }
+      }
+      var output = [text[currentIndex].slice(0, currentIndexExclamation), storeExclamationPoints, text[currentIndex].slice(currentIndexExclamation)].join('');
+      text[currentIndex] = output;
+    };
+
+    if (currentWord.indexOf("?") > -1) {
+      var currentIndexQuestion = text[currentIndex].indexOf("?");
+
+      text[currentIndex] = text[currentIndex].replace("?", "");
+      
+      var storeQuestionMarks = "?";
+      for (let j = 0; j < text.length - 1; j++) {
+        storeQuestionMarks += "?"
+      }
+
+      var output = [text[currentIndex].slice(0, currentIndexQuestion), storeQuestionMarks, text[currentIndex].slice(currentIndexQuestion)].join('');
+      console.log(text[currentIndex] + storeQuestionMarks, output)
+      text[currentIndex] = output;
+    }
+    
+  })
 
 	console.log(text.join(" "))
 	return text.join(" ");
 }
-
-n00bify("Hi, how are you today?") // , "HI HOW R U 2DAY?????");
-
-n00bify("I think it would be nice if we could all get along.") //, "OMG I think IT would B nice IF we COULD all GET along");
-
-n00bify("Let's eat, Grandma!") //, "Letz EAT Grandma!1!");
