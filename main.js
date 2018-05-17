@@ -1,5 +1,7 @@
 /*
 
+task link: https://www.codewars.com/kata/n00bify-english-to-n00b-translator/train/javascript
+
 @ task
 
 replace formal english with broken english base on certain rules 
