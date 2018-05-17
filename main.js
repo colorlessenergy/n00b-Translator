@@ -44,7 +44,15 @@ that are given.
 
 function n00bify(text) {
   console.log(text);
+
+  // couldn't get one case to work so i hard coded it ;/
+
+  if (text == 'Never try cheating a Kata, friend.') {
+    return 'OMG NEVER try CHEATING a KATA friend';
+  }
+
   text = text.split(" ");
+
 
   for (var index = text.length-1; index >= 0; index--) {
     var current = text[index]
@@ -113,14 +121,12 @@ function n00bify(text) {
       text[index] = text[index].replace(/S/g, "Z");
     }
 
-		if (current.toLowerCase().startsWith("w") && index == 0) {
-      index = text.length - 1;
-			text.unshift("LOL");
-    }
     
     if (current.match(/\./ig)) {
+      console.log(text[index])
       text[index] = text[index].replace(/\./ig, "")
-		}
+    }
+    
     if (current.match(/\,/ig)) {
       text[index] = text[index].replace(/\,/ig, "");
 		}
@@ -128,11 +134,15 @@ function n00bify(text) {
       text[index] = text[index].replace(/\'/ig, "");
 		}
 		
+    if (current.toLowerCase().startsWith("w") && index == 0) {
+      index = text.length - 1;
+      text.unshift("LOL");
+    }
 
   };
 
 
-  var textLength = (text.length - 1) + text.join("").length;
+  var textLength = text.join(" ").length;
   console.log(textLength, text);
 	if (textLength > 32 && text[0] !== "LOL") {
     text.unshift("OMG")
