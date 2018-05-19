@@ -5,6 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>English to Noob</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/module.css">
+
+
   <script src="noob-english.js" charset="utf-8"></script>
   <script src="main.js" defer></script>
 </head>
@@ -12,22 +19,22 @@
   <header>
     <h1>english to noob translator</h1>
   </header>
-  <section>
-    <h2>All about it</h2>
-    <p>
+  <section class="about">
+    <h2 class="about__title">All about it</h2>
+    <p class="about__info">
       insert some text in the field below, then press the button you will
       get text that has been altered
     </p>
   </section>
   <form class="form">
     <div class="form__group">
-      <label for="form__input"></label>
-      <input id="input" type="text" name="input" placeholder="input some text here...">
+      <label for="form__input-label">insert text here </label>
+      <input class="form__input" id="input" type="text" name="input" placeholder="input some text here...">
     </div>
-    <button type="submit" name="button">submit</button>
+    <button class="form__submit" type="submit" name="button">submit</button>
   </form>
   <div>
-    <p id="output">your new text: </p>
+    <p class="output">your new text: <span id="output"> </span></p>
   </div>
 </body>
 </html>
